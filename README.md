@@ -2,7 +2,7 @@
 
 ## Team Information
 
-**Team Name:** [Your Team Name]
+**Team Name:** Wellermen
 
 **Team Members:**
 - Pribék Barnabás - ETWSGU
