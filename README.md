@@ -1,66 +1,66 @@
 # BirdCLEF 2024 Audio Classification - Milestone 1
 
-## Csapat Információk
+## Team Information
 
-**Csapat neve:** [Your Team Name]
+**Team Name:** [Your Team Name]
 
-**Csapattagok:**
-- [Pribék Barnabás] - [ETWSGU]
-- [Csernák Gergő] - [TVEXOV]
-- [Molnár Bence] - [JINVFB]
+**Team Members:**
+- Pribék Barnabás - ETWSGU
+- Csernák Gergő - TVEXOV
+- Molnár Bence - JINVFB
 
-## Projekt Ismertetése
+## Project Description
 
-Ez a projekt a BirdCLEF 2024 versenyadatbázisát használja madárfajok azonosítására hangfelvételek alapján. A megoldás Keras és TensorFlow segítségével készült, mely az alábbi főbb lépéseket tartalmazza:
+This project uses the BirdCLEF 2024 competition dataset for bird species identification from audio recordings. The solution is built using Keras and TensorFlow, implementing the following main steps:
 
-1. **Adatforrás**: BirdCLEF 2024 versenyadatbázis (182 madárfaj, ~24,459 hangfelvétel)
-2. **Adatfeldolgozás**: OGG formátumú hangfájlok konvertálása mel-spektrogrammá
-3. **Modell**: EfficientNetV2-B2 alapú képosztályozó (ImageNet előtanítással)
-4. **Augmentáció**: MixUp, time-masking, frequency-masking technikák
+1. **Data Source**: BirdCLEF 2024 competition dataset (182 bird species, ~24,459 audio recordings)
+2. **Data Processing**: Converting OGG format audio files to mel-spectrograms
+3. **Model**: EfficientNetV2-B2 based image classifier (pretrained on ImageNet)
+4. **Augmentation**: MixUp, time-masking, and frequency-masking techniques
 
-### Adatbázis Letöltése
+### Dataset Download
 
-Az adatbázis a [BirdCLEF 2024 Kaggle versenyről](https://www.kaggle.com/competitions/birdclef-2024) tölthető le. A projekt Google Drive-ban tárolt adatokkal dolgozik a könnyebb hozzáférés érdekében.
+The dataset can be downloaded from the [BirdCLEF 2024 Kaggle competition](https://www.kaggle.com/competitions/birdclef-2024). This project works with data stored in Google Drive for easier access.
 
-## Repo Fájlok és Funkcióik
+## Repository Files and Their Functions
 
 ### `BirdCLEF24_NHF.ipynb`
-Az elsődleges notebook, amely tartalmazza a teljes data pipeline-t:
+The primary notebook containing the complete data pipeline:
 
-**1. Adatforrás és letöltés:**
-- Google Drive integráció a BirdCLEF 2024 adatbázis eléréséhez
-- Adatbázis ellenőrzés és validálás
-- Metaadat betöltés (`train_metadata.csv`)
+**1. Data Source and Download:**
+- Google Drive integration for accessing the BirdCLEF 2024 dataset
+- Dataset verification and validation
+- Metadata loading (`train_metadata.csv`)
 
-**2. Adatok feltárása és vizualizáció:**
-- Audio fájlok betöltése és lejátszása
-- Hullámforma (waveform) megjelenítés
-- Mel-spektrogram vizualizáció
-- Fajok eloszlásának statisztikái
+**2. Data Exploration and Visualization:**
+- Audio file loading and playback
+- Waveform visualization
+- Mel-spectrogram visualization
+- Species distribution statistics
 
-**3. Adatok előkészítése:**
-- **Train/Validation/Test split**: 80/20 arányú felosztás
-- **Audio preprocessing**:
-  - 15 másodperces egységes hosszra vágás/kitöltés
-  - 32,000 Hz mintavételezési frekvencia
-  - Mel-spektrogram generálás (128x384 pixel)
-- **Augmentáció** (csak training adatokon):
+**3. Data Preparation:**
+- **Train/Validation/Test Split**: 80/20 ratio split
+- **Audio Preprocessing**:
+  - Cropping/padding to uniform 15-second length
+  - 32,000 Hz sampling rate
+  - Mel-spectrogram generation (128x384 pixels)
+- **Augmentation** (training data only):
   - MixUp (α=0.4)
   - Time-masking (6-12%)
   - Frequency-masking (6-10%)
-- **TensorFlow Dataset pipeline**: hatékony, batch-alapú adatbetöltés
+- **TensorFlow Dataset Pipeline**: Efficient, batch-based data loading
 
-**Végeredmény:**
-- `train_ds`: Tanító adathalmaz (19,567 minta, augmentált)
-- `valid_ds`: Validációs adathalmaz (4,892 minta, nem augmentált)
-- Formátum: (128, 384, 3) méretű spektrogramok + one-hot kódolt címkék (182 osztály)
+**Final Output:**
+- `train_ds`: Training dataset (19,567 samples, augmented)
+- `valid_ds`: Validation dataset (4,892 samples, not augmented)
+- Format: (128, 384, 3) spectrograms + one-hot encoded labels (182 classes)
 
-## Futtatási Útmutató
+## Execution Guide
 
-### Előfeltételek
+### Prerequisites
 
-1. **Google Colab fiók**
-2. **Google Drive**: Az adatbázis feltöltve a következő útvonalon:
+1. **Google Colab account**
+2. **Google Drive**: Dataset uploaded at the following path:
    ```
    My Drive/Deep_Learning_NHF/birdclef-2024/
    ├── train_audio/
@@ -70,56 +70,60 @@ Az elsődleges notebook, amely tartalmazza a teljes data pipeline-t:
    └── train_metadata.csv
    ```
 
-### Futtatás
+### Running the Notebook
 
-1. **Nyissa meg a notebookot Google Colab-ban:**
+1. **Open the notebook in Google Colab:**
    
-   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/[YOUR-USERNAME]/[YOUR-REPO]/blob/main/Untitled4%20(4).ipynb)
+   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BarnaP02/Deep-Learning-NHF/blob/4266bea0f3fd50093292e726b95d2c151ad7ac28/BirdCLEF24_NHZ.ipynb)
 
-2. **Futtassa a cellákat sorrendben:**
-   - **Import Libraries**: Függőségek telepítése
-   - **Kaggle Setup and Data Download**: Google Drive csatlakoztatás
-   - **Configuration**: Hiperparaméterek beállítása
-   - **Load Class Names**: Osztályok inicializálása
-   - **Meta Data**: Adatok betöltése és szűrése
-   - **Data Split**: Train/validation felosztás
-   - **Data Loaders**: TensorFlow Dataset pipeline létrehozása
-   - **Visualization**: Batch megjelenítés és ellenőrzés
+2. **Execute cells in order:**
+   - **Import Libraries**: Install dependencies
+   - **Kaggle Setup and Data Download**: Mount Google Drive
+   - **Configuration**: Set hyperparameters
+   - **Load Class Names**: Initialize classes
+   - **Meta Data**: Load and filter data
+   - **Data Split**: Create train/validation split
+   - **Data Loaders**: Build TensorFlow Dataset pipeline
+   - **Visualization**: Display and verify batches
 
-3. **Drive engedélyezés**: Az első futtatáskor engedélyezze a Google Drive hozzáférést
+3. **Drive Authorization**: On first run, authorize Google Drive access
 
-4. **Ellenőrzés**: A notebook végén megjelennek a mintaképek és spektrogramok
+4. **Verification**: Sample images and spectrograms will be displayed at the end of the notebook
 
-## Technikai Részletek
+## Technical Details
 
-### Konfiguráció (CFG osztály)
+### Configuration (CFG class)
 ```python
-img_size = [128, 384]      # Spectrogram méret
-batch_size = 64            # Batch méret
-duration = 15              # Audio hossz (másodperc)
-sample_rate = 32000        # Mintavételezés
-epochs = 10                # Tanítási epoch-ok
+img_size = [128, 384]      # Spectrogram dimensions
+batch_size = 64            # Batch size
+duration = 15              # Audio length (seconds)
+sample_rate = 32000        # Sampling rate
+epochs = 10                # Training epochs
 preset = 'efficientnetv2_b2_imagenet'  # Model
 ```
 
-### Használt Könyvtárak
+### Libraries Used
 - TensorFlow 2.19.0
 - Keras 3.10.0
 - KerasCV 0.9.0
-- Librosa (audio feldolgozás)
-- Pandas, NumPy (adatkezelés)
-- Matplotlib (vizualizáció)
+- Librosa (audio processing)
+- Pandas, NumPy (data handling)
+- Matplotlib (visualization)
 
-## Eredmények
+## Results
 
-- **Betöltött minták száma**: 24,459
-- **Madárfajok száma**: 182
-- **Tanító minták**: 19,567
-- **Validációs minták**: 4,892
-- **Spektrogram dimenziók**: 128 (frekvencia) × 384 (idő) × 3 (csatorna)
+- **Total samples loaded**: 24,459
+- **Number of bird species**: 182
+- **Training samples**: 19,567
+- **Validation samples**: 4,892
+- **Spectrogram dimensions**: 128 (frequency) × 384 (time) × 3 (channels)
 
-## Megjegyzések
+## Notes
 
-- Az eredeti Kaggle notebook módosítva lett Google Drive támogatással
-- Kompatibilitási hibák javítva a legújabb library verziókhoz
-- Reprodukálhatóság: `seed = 42`
+- The original Kaggle notebook has been modified with Google Drive support
+- Compatibility issues fixed for the latest library versions
+- Reproducibility: `seed = 42`
+
+## License
+
+This project follows the BirdCLEF 2024 competition rules and dataset license.
