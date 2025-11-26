@@ -85,6 +85,10 @@ The primary notebook containing the complete data pipeline:
    - **Data Split**: Create train/validation split
    - **Data Loaders**: Build TensorFlow Dataset pipeline
    - **Visualization**: Display and verify batches
+   - **Model**: Builds, compiles, trains, evaluates and tests the model using all species data and all the audioscapes for evauation
+   - **Configure for Reduced Species**: Configures the model to use only the first 10 species data for training
+   - **Reduced Model**: Builds, compiles, trains and tests the model using the first 10 species and all the audioscapes for evaluation
+   - **Modify Test Filepaths to Limit Count**: Evaluates using only the first 10 audioscape files
 
 3. **Drive Authorization**: On first run, authorize Google Drive access
 
