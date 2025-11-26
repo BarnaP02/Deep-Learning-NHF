@@ -1,4 +1,4 @@
-# BirdCLEF 2024 Audio Classification - Milestone 1
+# BirdCLEF 2024 Audio Classification - Milestone 2
 
 ## Team Information
 
